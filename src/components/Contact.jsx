@@ -40,23 +40,43 @@ export default function Contact() {
           rotation: 45,
         }));
         
-        // Animate rocket using requestAnimationFrame
-        let startTime = null;
-        const animateDuration = 1000; // 1 second
+        // Animation sequence: 2 round trips with medium speed (800ms per leg)
+        let tripCount = 0; // 0 = first trip out, 1 = first trip back, 2 = second trip out, 3 = second trip back
+        const legDuration = 800; // 800ms per leg (medium speed)
         
-        const animate = (currentTime) => {
-          if (!startTime) startTime = currentTime;
-          const elapsed = currentTime - startTime;
-          const progress = Math.min(elapsed / animateDuration, 1);
+        const animateLeg = (currentTime, startAnimTime) => {
+          const elapsed = currentTime - startAnimTime;
+          const progress = Math.min(elapsed / legDuration, 1);
           
           // Easing function: ease-in-out
           const easeProgress = progress < 0.5 
             ? 2 * progress * progress 
             : -1 + (4 - 2 * progress) * progress;
           
-          const currentX = startX + (endX - startX) * easeProgress;
-          const currentY = startY + (endY - startY) * easeProgress;
-          const currentRotation = 45 + (-20 - 45) * easeProgress;
+          let fromX, fromY, toX, toY, fromRotation, toRotation;
+          
+          // Determine current leg direction
+          if (tripCount === 0 || tripCount === 2) {
+            // Going out: start -> contact
+            fromX = startX;
+            fromY = startY;
+            toX = endX;
+            toY = endY;
+            fromRotation = 45;
+            toRotation = -20;
+          } else {
+            // Coming back: contact -> start
+            fromX = endX;
+            fromY = endY;
+            toX = startX;
+            toY = startY;
+            fromRotation = -20;
+            toRotation = 45;
+          }
+          
+          const currentX = fromX + (toX - fromX) * easeProgress;
+          const currentY = fromY + (toY - fromY) * easeProgress;
+          const currentRotation = fromRotation + (toRotation - fromRotation) * easeProgress;
           
           setRocketState(prev => ({
             ...prev,
@@ -66,20 +86,27 @@ export default function Contact() {
           }));
           
           if (progress < 1) {
-            requestAnimationFrame(animate);
+            requestAnimationFrame((time) => animateLeg(time, startAnimTime));
           } else {
-            // Animation complete, mark as landed
-            setRocketState(prev => ({
-              ...prev,
-              landed: true,
-              x: endX,
-              y: endY,
-            }));
-            setIsAnimating(false);
+            // Leg complete, check if we need another leg
+            if (tripCount < 3) {
+              // More legs to go
+              tripCount++;
+              requestAnimationFrame((time) => animateLeg(time, time));
+            } else {
+              // All legs complete, end beside Contact title
+              setRocketState(prev => ({
+                ...prev,
+                landed: true,
+                x: endX,
+                y: endY,
+              }));
+              setIsAnimating(false);
+            }
           }
         };
         
-        requestAnimationFrame(animate);
+        requestAnimationFrame((time) => animateLeg(time, time));
       }
     };
 
