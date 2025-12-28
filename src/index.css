@@ -152,6 +152,7 @@ html {
   pointer-events: none;
   overflow: hidden;
   z-index: 5;
+  filter: blur(0.8px);
 }
 
 .confetti {
