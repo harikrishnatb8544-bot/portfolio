@@ -31,6 +31,13 @@ export default function Contact() {
               <span className="contact-label">Location</span>
               <span className="contact-value">Bengaluru, India</span>
             </div>
+            <a
+              href="tel:+919632768544"
+              className="contact-link"
+            >
+              <span className="contact-label">Phone</span>
+              <span className="contact-value">+91 9632768544</span>
+            </a>
           </div>
         </div>
       </div>
