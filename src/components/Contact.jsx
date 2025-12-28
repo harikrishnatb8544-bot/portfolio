@@ -1,8 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function Contact() {
+  const [showRocket, setShowRocket] = useState(false);
+
+  useEffect(() => {
+    const handleRocketLaunch = () => {
+      setShowRocket(true);
+      
+      // Reset after animation completes
+      setTimeout(() => {
+        setShowRocket(false);
+      }, 5000);
+    };
+
+    window.addEventListener('launchRocket', handleRocketLaunch);
+    return () => window.removeEventListener('launchRocket', handleRocketLaunch);
+  }, []);
+
   return (
     <section id="contact" className="contact">
+      {/* Rocket animation triggered on button click */}
+      {showRocket && (
+        <div className="rocket-launch">
+          <div className="rocket-animated">🚀</div>
+        </div>
+      )}
 
       <div className="container">
         <h2 className="section-title">Contact</h2>

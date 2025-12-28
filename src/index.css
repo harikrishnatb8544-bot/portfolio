@@ -786,6 +786,37 @@ html {
   font-size: 1.2rem;
 }
 
+@keyframes rocketLaunch {
+  0% {
+    bottom: 20px;
+    left: 20px;
+    opacity: 1;
+    transform: scale(1) rotate(-45deg);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    bottom: calc(100vh - 100px);
+    left: calc(50% - 20px);
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+}
+
+.rocket-launch {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.rocket-animated {
+  font-size: 2rem;
+  animation: rocketLaunch 5s ease-in-out forwards;
+}
+
 /* Contact Section */
 .contact-content {
   max-width: 700px;

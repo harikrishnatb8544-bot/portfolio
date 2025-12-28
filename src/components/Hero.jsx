@@ -4,6 +4,9 @@ export default function Hero() {
   const [confetti, setConfetti] = useState([]);
 
   const handleScroll = (id) => {
+    // Trigger rocket animation before scrolling
+    window.dispatchEvent(new CustomEvent('launchRocket'));
+    
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
@@ -14,7 +17,7 @@ export default function Hero() {
   useEffect(() => {
     const generateConfetti = () => {
       const symbols = ['📊', '📈', '🔬', '💻', '📉', '⚙️', '🎯', '🔍', '📐', '🧮', '💡', '⚡'];
-      const newConfetti = Array.from({ length: 40 }, (_, i) => ({
+      const newConfetti = Array.from({ length: 20 }, (_, i) => ({
         id: i,
         symbol: symbols[Math.floor(Math.random() * symbols.length)],
         left: Math.random() * 100,
