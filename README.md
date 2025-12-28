@@ -2,6 +2,8 @@
 
 A professional, minimal, and recruiter-friendly Data Science portfolio built with React and Vite.
 
+**🌐 Live Site**: https://harikrishnatb8544-bot.github.io/portfolio/
+
 ## Features
 
 ✨ **Professional Design**
