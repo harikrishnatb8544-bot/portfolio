@@ -11,6 +11,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
     
     - name: Setup Node.js
       uses: actions/setup-node@v4
@@ -24,19 +26,19 @@ jobs:
     - name: Build project
       run: npm run build
     
-    - name: Configure git
+    - name: Configure git for deployment
       run: |
         git config --global user.email "action@github.com"
         git config --global user.name "GitHub Action"
     
     - name: Deploy to gh-pages
       run: |
-        git checkout --orphan gh-pages
+        git fetch origin gh-pages --depth=1 2>/dev/null || true
+        git checkout --orphan gh-pages-temp
         git rm -rf .
         cp -r dist/* .
-        echo "harikrishnatb8544-bot.github.io" > CNAME
         git add .
-        git commit -m "Deploy to GitHub Pages"
-        git push -f origin gh-pages
+        git commit -m "Deploy to GitHub Pages [skip ci]"
+        git push -f origin gh-pages-temp:gh-pages
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
