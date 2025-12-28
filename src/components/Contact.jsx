@@ -40,18 +40,42 @@ export default function Contact() {
           rotation: 45,
         }));
         
-        // Animation sequence: 2 round trips with medium speed (800ms per leg)
+        // Helper function to calculate position on a smooth curved path using quadratic bezier curve
+        const getPointOnCurve = (progress, fromX, fromY, toX, toY) => {
+          // Control point for the curve - creates a smooth wave-like path
+          // The control point is offset to create a natural curved trajectory
+          const midX = (fromX + toX) / 2;
+          const midY = (fromY + toY) / 2;
+          
+          // Offset control point perpendicular to the line
+          const dx = toX - fromX;
+          const dy = toY - fromY;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          
+          // Create a smooth curve by offsetting the control point
+          const offsetFactor = distance * 0.3;
+          const perpX = -dy / distance * offsetFactor;
+          const perpY = dx / distance * offsetFactor;
+          
+          const controlX = midX + perpX;
+          const controlY = midY + perpY;
+          
+          // Quadratic bezier formula: B(t) = (1-t)²P0 + 2(1-t)tP1 + t²P2
+          const t = progress;
+          const mt = 1 - t;
+          const x = mt * mt * fromX + 2 * mt * t * controlX + t * t * toX;
+          const y = mt * mt * fromY + 2 * mt * t * controlY + t * t * toY;
+          
+          return { x, y };
+        };
+        
+        // Animation sequence: 2 round trips with smooth curved paths
         let tripCount = 0; // 0 = first trip out, 1 = first trip back, 2 = second trip out, 3 = second trip back
         const legDuration = 800; // 800ms per leg (medium speed)
         
         const animateLeg = (currentTime, startAnimTime) => {
           const elapsed = currentTime - startAnimTime;
           const progress = Math.min(elapsed / legDuration, 1);
-          
-          // Easing function: ease-in-out
-          const easeProgress = progress < 0.5 
-            ? 2 * progress * progress 
-            : -1 + (4 - 2 * progress) * progress;
           
           let fromX, fromY, toX, toY, fromRotation, toRotation;
           
@@ -74,14 +98,14 @@ export default function Contact() {
             toRotation = 45;
           }
           
-          const currentX = fromX + (toX - fromX) * easeProgress;
-          const currentY = fromY + (toY - fromY) * easeProgress;
-          const currentRotation = fromRotation + (toRotation - fromRotation) * easeProgress;
+          // Get position on smooth curved path
+          const curvePoint = getPointOnCurve(progress, fromX, fromY, toX, toY);
+          const currentRotation = fromRotation + (toRotation - fromRotation) * progress;
           
           setRocketState(prev => ({
             ...prev,
-            x: currentX,
-            y: currentY,
+            x: curvePoint.x,
+            y: curvePoint.y,
             rotation: currentRotation,
           }));
           
