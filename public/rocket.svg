@@ -1,0 +1,27 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Rocket Body -->
+  <ellipse cx="100" cy="80" rx="35" ry="50" fill="#d0d0d0" stroke="#000" stroke-width="2"/>
+  
+  <!-- Rocket Top/Nose Cone -->
+  <polygon points="100,20 80,50 120,50" fill="#4a5fbf" stroke="#000" stroke-width="2"/>
+  
+  <!-- Window -->
+  <circle cx="100" cy="60" r="12" fill="#e6f0ff" stroke="#333" stroke-width="2"/>
+  
+  <!-- Left Fin -->
+  <polygon points="75,100 55,140 75,125" fill="#4a5fbf" stroke="#000" stroke-width="2"/>
+  
+  <!-- Right Fin -->
+  <polygon points="125,100 145,140 125,125" fill="#4a5fbf" stroke="#000" stroke-width="2"/>
+  
+  <!-- Left Flame -->
+  <polygon points="85,135 70,160 80,140" fill="#ff8800" stroke="#000" stroke-width="1.5"/>
+  <polygon points="85,140 65,165 78,145" fill="#ffcc00" stroke="none"/>
+  
+  <!-- Right Flame -->
+  <polygon points="115,135 130,160 120,140" fill="#ff8800" stroke="#000" stroke-width="1.5"/>
+  <polygon points="115,140 135,165 122,145" fill="#ffcc00" stroke="none"/>
+  
+  <!-- Center Flame -->
+  <polygon points="100,138 95,170 100,145 105,170" fill="#ff6600" stroke="#000" stroke-width="1.5"/>
+</svg>
