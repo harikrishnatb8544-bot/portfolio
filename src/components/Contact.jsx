@@ -4,13 +4,13 @@ export default function Contact() {
   const [rocketState, setRocketState] = useState({
     show: false,
     landed: false,
-    startX: window.innerWidth,
-    startY: window.innerHeight,
-    endX: 0,
-    endY: 0,
+    x: 0,
+    y: 0,
+    rotation: 45,
   });
   const [isAnimating, setIsAnimating] = useState(false);
   const contactTitleRef = useRef(null);
+  const rocketRef = useRef(null);
 
   useEffect(() => {
     const handleRocketLaunch = () => {
@@ -25,26 +25,61 @@ export default function Contact() {
         
         // Calculate landing position: right of the text, vertically centered
         const endX = rect.left + rect.width + 20; // 20px to the right of text
-        const endY = rect.top + rect.height / 2; // vertically centered
+        const endY = rect.top + rect.height / 2 - 15; // vertically centered, adjusted for icon size
+        
+        // Start position: bottom-right off screen
+        const startX = window.innerWidth + 50;
+        const startY = window.innerHeight + 50;
         
         setRocketState(prev => ({
           ...prev,
           show: true,
           landed: false,
-          startX: window.innerWidth + 50,
-          startY: window.innerHeight + 50,
-          endX: endX,
-          endY: endY,
+          x: startX,
+          y: startY,
+          rotation: 45,
         }));
         
-        // After animation completes, mark as landed (keep visible)
-        setTimeout(() => {
+        // Animate rocket using requestAnimationFrame
+        let startTime = null;
+        const animateDuration = 1000; // 1 second
+        
+        const animate = (currentTime) => {
+          if (!startTime) startTime = currentTime;
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / animateDuration, 1);
+          
+          // Easing function: ease-in-out
+          const easeProgress = progress < 0.5 
+            ? 2 * progress * progress 
+            : -1 + (4 - 2 * progress) * progress;
+          
+          const currentX = startX + (endX - startX) * easeProgress;
+          const currentY = startY + (endY - startY) * easeProgress;
+          const currentRotation = 45 + (-20 - 45) * easeProgress;
+          
           setRocketState(prev => ({
             ...prev,
-            landed: true,
+            x: currentX,
+            y: currentY,
+            rotation: currentRotation,
           }));
-          setIsAnimating(false);
-        }, 1000); // 1000ms animation duration
+          
+          if (progress < 1) {
+            requestAnimationFrame(animate);
+          } else {
+            // Animation complete, mark as landed
+            setRocketState(prev => ({
+              ...prev,
+              landed: true,
+              x: endX,
+              y: endY,
+            }));
+            setIsAnimating(false);
+          }
+        };
+        
+        requestAnimationFrame(animate);
       }
     };
 
@@ -57,12 +92,12 @@ export default function Contact() {
       {/* Dynamic rocket animation */}
       {rocketState.show && (
         <div 
+          ref={rocketRef}
           className={`rocket-launcher ${rocketState.landed ? 'landed' : 'animating'}`}
           style={{
-            '--start-x': `${rocketState.startX}px`,
-            '--start-y': `${rocketState.startY}px`,
-            '--end-x': `${rocketState.endX}px`,
-            '--end-y': `${rocketState.endY}px`,
+            left: `${rocketState.x}px`,
+            top: `${rocketState.y}px`,
+            transform: `rotate(${rocketState.rotation}deg)`,
           }}
         >
           <div className="rocket-icon">🚀</div>
