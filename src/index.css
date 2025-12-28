@@ -786,35 +786,42 @@ html {
   font-size: 1.2rem;
 }
 
-@keyframes rocketLaunch {
+@keyframes rocketTravelToTitle {
   0% {
-    bottom: 20px;
-    left: 20px;
+    bottom: -50px;
+    right: -50px;
     opacity: 1;
-    transform: scale(1) rotate(-45deg);
+    transform: rotate(45deg) scale(1);
   }
   50% {
     opacity: 1;
   }
   100% {
-    bottom: calc(100vh - 100px);
-    left: calc(50% - 20px);
+    bottom: auto;
+    right: auto;
+    top: 50%;
+    left: calc(50% + 150px);
     opacity: 0;
-    transform: scale(0) rotate(0deg);
+    transform: rotate(0deg) scale(0);
   }
 }
 
-.rocket-launch {
+.rocket-launch-container {
   position: fixed;
-  bottom: 20px;
-  left: 20px;
+  bottom: -50px;
+  right: -50px;
   z-index: 100;
   pointer-events: none;
+  width: 60px;
+  height: 60px;
 }
 
-.rocket-animated {
-  font-size: 2rem;
-  animation: rocketLaunch 5s ease-in-out forwards;
+.rocket-animated-travel {
+  font-size: 2.5rem;
+  animation: rocketTravelToTitle 4s ease-in-out forwards;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Contact Section */

@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 export default function Contact() {
   const [showRocket, setShowRocket] = useState(false);
+  const contactTitleRef = useRef(null);
 
   useEffect(() => {
     const handleRocketLaunch = () => {
       setShowRocket(true);
       
-      // Reset after animation completes
+      // Vanish after animation completes
       setTimeout(() => {
         setShowRocket(false);
-      }, 5000);
+      }, 4000);
     };
 
     window.addEventListener('launchRocket', handleRocketLaunch);
@@ -19,10 +20,10 @@ export default function Contact() {
 
   return (
     <section id="contact" className="contact">
-      {/* Rocket animation triggered on button click */}
+      {/* Rocket animation triggered after scroll completes */}
       {showRocket && (
-        <div className="rocket-launch">
-          <div className="rocket-animated">🚀</div>
+        <div className="rocket-launch-container">
+          <div className="rocket-animated-travel">🚀</div>
         </div>
       )}
 

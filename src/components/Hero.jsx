@@ -4,12 +4,14 @@ export default function Hero() {
   const [confetti, setConfetti] = useState([]);
 
   const handleScroll = (id) => {
-    // Trigger rocket animation before scrolling
-    window.dispatchEvent(new CustomEvent('launchRocket'));
-    
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
+      
+      // Trigger rocket animation after scroll completes (approximately 1 second for smooth scroll)
+      setTimeout(() => {
+        window.dispatchEvent(new CustomEvent('launchRocket'));
+      }, 1200);
     }
   };
 
