@@ -786,17 +786,6 @@ html {
   font-size: 1.2rem;
 }
 
-.rocket-launcher {
-  position: fixed;
-  z-index: 100;
-  pointer-events: none;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 /* Contact Section */
 .contact-content {
   max-width: 700px;
