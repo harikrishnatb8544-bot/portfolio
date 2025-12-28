@@ -7,11 +7,6 @@ export default function Hero() {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
-      
-      // Trigger rocket animation after scroll completes
-      setTimeout(() => {
-        window.dispatchEvent(new CustomEvent('launchRocket', { detail: { contactId: id } }));
-      }, 1000);
     }
   };
 

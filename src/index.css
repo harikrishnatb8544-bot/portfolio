@@ -797,23 +797,6 @@ html {
   justify-content: center;
 }
 
-.rocket-launcher.animating {
-  /* Animation handled by requestAnimationFrame in React */
-}
-
-.rocket-launcher.landed {
-  pointer-events: auto;
-}
-
-.rocket-icon {
-  font-size: 2.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  justify-content: center;
-  transform-origin: center;
-}
-
 /* Contact Section */
 .contact-content {
   max-width: 700px;
