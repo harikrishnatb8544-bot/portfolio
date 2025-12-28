@@ -57,15 +57,15 @@ export default function Contact() {
         const endX = rect.left + rect.width + 10; // 10px gap to the right
         const endY = rect.top + rect.height / 2 - 15; // vertically centered
 
-        // Start position: right side of screen, slightly above bottom-right
-        const startX = window.innerWidth + 100;
+        // Start position: right side of screen (within viewport), slightly above bottom-right
+        const startX = window.innerWidth - 40; // Keep within viewport right edge
         const startY = window.innerHeight - 150;
 
         // Control points for cubic bezier curve
         // Creates a natural inward-then-curve-to-target path
-        const cp1X = window.innerWidth - 100; // First control point: move left
-        const cp1Y = window.innerHeight - 300; // Higher up
-        const cp2X = (startX + endX) / 2 - 200; // Second control point: curve adjustment
+        const cp1X = window.innerWidth - 300; // First control point: move inward
+        const cp1Y = window.innerHeight - 350; // Higher up
+        const cp2X = (startX + endX) / 2 + 50; // Second control point: smooth approach
         const cp2Y = endY - 200; // Create smooth approach
 
         setRocketState(prev => ({
