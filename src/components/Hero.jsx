@@ -8,10 +8,10 @@ export default function Hero() {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
       
-      // Trigger rocket animation after scroll completes (approximately 1 second for smooth scroll)
+      // Trigger rocket animation after scroll completes
       setTimeout(() => {
-        window.dispatchEvent(new CustomEvent('launchRocket'));
-      }, 1200);
+        window.dispatchEvent(new CustomEvent('launchRocket', { detail: { contactId: id } }));
+      }, 1000);
     }
   };
 

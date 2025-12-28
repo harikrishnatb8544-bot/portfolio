@@ -786,42 +786,43 @@ html {
   font-size: 1.2rem;
 }
 
-@keyframes rocketTravelToTitle {
+@keyframes rocketFly {
   0% {
-    bottom: -50px;
-    right: -50px;
+    left: var(--start-x);
+    top: var(--start-y);
     opacity: 1;
     transform: rotate(45deg) scale(1);
   }
-  50% {
-    opacity: 1;
-  }
   100% {
-    bottom: auto;
-    right: auto;
-    top: 50%;
-    left: calc(50% + 150px);
-    opacity: 0;
-    transform: rotate(0deg) scale(0);
+    left: var(--end-x);
+    top: var(--end-y);
+    opacity: 1;
+    transform: rotate(-20deg) scale(1);
   }
 }
 
-.rocket-launch-container {
+.rocket-launcher {
   position: fixed;
-  bottom: -50px;
-  right: -50px;
   z-index: 100;
   pointer-events: none;
-  width: 60px;
-  height: 60px;
 }
 
-.rocket-animated-travel {
+.rocket-launcher.animating {
+  animation: rocketFly 1s ease-in-out forwards;
+}
+
+.rocket-launcher.landed {
+  left: var(--end-x) !important;
+  top: var(--end-y) !important;
+  pointer-events: auto;
+}
+
+.rocket-icon {
   font-size: 2.5rem;
-  animation: rocketTravelToTitle 4s ease-in-out forwards;
   display: flex;
   align-items: center;
   justify-content: center;
+  transform-origin: center;
 }
 
 /* Contact Section */
