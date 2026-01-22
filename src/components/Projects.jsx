@@ -4,24 +4,27 @@ export default function Projects() {
   const projects = [
     {
       id: 1,
-      title: 'Customer Churn Prediction',
-      description: 'Predict customers likely to churn in Telecom / SaaS domains.',
+      title: 'Customer Trust Score Engine',
+      description: 'Customer trust and churn risk prediction engine for Telecom and SaaS domains using behavioral feature engineering and machine learning.',
       stages: ['💡 Design', '🔨 Build', '✅ Test', '🚀 Deploy'],
-      impact: 'Improved customer retention strategy'
+      impact: 'Improved customer retention strategy',
+      github: 'https://github.com/harikrishnatb8544-bot/Customer-Trust-Score-Engine'
     },
     {
       id: 2,
       title: 'Credit Risk Scoring System',
       description: 'Loan default prediction for FinTech use cases.',
       stages: ['💡 Design', '🔨 Build', '✅ Test', '🚀 Deploy'],
-      impact: 'Reduced financial risk'
+      impact: 'Reduced financial risk',
+      github: ''
     },
     {
       id: 3,
       title: 'Sales Forecasting',
       description: 'Time series-based demand and sales forecasting.',
       stages: ['💡 Design', '🔨 Build', '✅ Test', '🚀 Deploy'],
-      impact: 'Optimized inventory decisions'
+      impact: 'Optimized inventory decisions',
+      github: ''
     }
   ];
 
@@ -38,6 +41,19 @@ export default function Projects() {
               <p className="project-impact">
                 <strong>Impact:</strong> {project.impact}
               </p>
+
+              <div className="project-actions">
+                {project.github && (
+                  <a 
+                    href={project.github} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="project-button github-button"
+                  >
+                    GitHub
+                  </a>
+                )}
+              </div>
             </div>
           ))}
         </div>
